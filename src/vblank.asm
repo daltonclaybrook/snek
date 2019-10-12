@@ -9,6 +9,7 @@ VBlank::
 	push de
 	push hl
 
+	call SetDirectionFromJoypad
     call DrawSnake
 
     pop hl

@@ -36,6 +36,7 @@ Start::
     call CopySnakeTilesToVRAM
     call CopySnakeBGPaletteToVRAM
     call ConfigureInitialSnakeValues
+    call SetInitialDirection
     call ConfigureInterrupts
     call StartTimer
     call EnableLCD
@@ -61,3 +62,4 @@ include "src/timer.asm"
 include "src/snake-gfx.asm"
 include "src/snake.asm"
 include "src/random.asm"
+include "src/joypad.asm"
