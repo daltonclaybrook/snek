@@ -33,12 +33,13 @@ section "Main", rom0[$150]
 
 Start::
     call DisableLCD
-    call ConfigureInterrupts
     call CopySnakeTilesToVRAM
     call CopySnakeBGPaletteToVRAM
     call ConfigureInitialSnakeValues
+    call ConfigureInterrupts
     call StartTimer
     call EnableLCD
+    ei
 .gameLoop
     halt
     jr .gameLoop
@@ -46,7 +47,6 @@ Start::
 ConfigureInterrupts::
     ld a, IEF_VBLANK | IEF_TIMER | IEF_SERIAL
     ld [rIE], a
-    ei
     ret
 
 StartTimer::

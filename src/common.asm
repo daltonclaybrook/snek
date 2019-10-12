@@ -16,3 +16,17 @@ EnableLCD::
     set LCD_ON_BIT, a ; turn on LCD
     ld [rLCDC], a
     ret
+
+; multiple `bc` by 2
+DoubleBC::
+    sla c
+    ret nc
+    inc b
+    ret
+
+; multiple `de` by 2
+DoubleDE::
+    sla e
+    ret nc
+    inc d
+    ret
