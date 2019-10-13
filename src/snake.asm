@@ -121,7 +121,20 @@ WrapBCIfNecessary::
     dec h
     jr .finish
 .checkTop
+    ; jr .finish
 .checkBottom
+    ld a, h
+    cp $02
+    jr nz, .finish
+    ld a, l
+    and $e0 ; mask off the column number. What we're left with is only row information
+    cp $40
+    jr nz, .finish ; at this point, we've determined `hl` == $0240 when you mask off the row info. This means the snake has gone off the bottom.
+    ld a, l
+    and $1f ; masks off the current row. What we're left with is a value 0-31
+    ld l, a
+    ld h, 0
+    jr .finish
 .finish
     ld b, h ; copy `hl` back into `bc`
     ld c, l
