@@ -15,3 +15,11 @@ wSnakeLength::
 ; Segments are stored as 16-bit numbers, so 360 * 2 is reserved.
 wSegmentLocations::
     ds 360 * 2
+
+; The current location of the apple as an offset in the BG Map
+wAppleLocation::
+    ds 2
+
+; Used to zero out the tile where the apple last was
+wLastAppleLocation::
+    ds 2

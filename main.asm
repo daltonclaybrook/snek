@@ -37,6 +37,7 @@ Start::
     call CopySnakeBGPaletteToVRAM
     call ConfigureInitialSnakeValues
     call SetInitialDirection
+    call SetInitialAppleValues
     call ConfigureInterrupts
     call StartTimer
     call EnableLCD
@@ -61,5 +62,6 @@ include "src/vblank.asm"
 include "src/timer.asm"
 include "src/snake-gfx.asm"
 include "src/snake.asm"
+include "src/apple.asm"
 include "src/random.asm"
 include "src/joypad.asm"

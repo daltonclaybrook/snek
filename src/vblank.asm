@@ -2,6 +2,7 @@ section "VBlank", rom0
 
 HEAD_TILE_RIGHT EQU $4
 HEAD_TILE_UP EQU $6
+APPLE_TILE EQU $7
 
 VBlank::
     push af
@@ -11,6 +12,7 @@ VBlank::
 
 	call SetDirectionFromJoypad
     call DrawSnake
+	call DrawApple
 
     pop hl
 	pop de
@@ -46,4 +48,20 @@ DrawSnake::
 	dec c
 	jr nz, .drawNextSegment
 	ld [hl], 0 ; erase the last tile drawn
+	ret
+
+DrawApple::
+	ld a, [wLastAppleLocation]
+	ld h, a
+	ld a, [wLastAppleLocation + 1]
+	ld l, a ; `hl` contains last apple location
+	ld de, _SCRN0
+	add hl, de ; `hl` contains the BG map location of the last apple
+	ld [hl], 0 ; erase the last apple
+	ld a, [wAppleLocation]
+	ld h, a
+	ld a, [wAppleLocation + 1]
+	ld l, a ; `hl` contains current apple location
+	add hl, de ; `hl` contains the BG map location of the current apple
+	ld [hl], APPLE_TILE ; update BG map with apple tile
 	ret
