@@ -1,7 +1,7 @@
 section "Timer", rom0
 
 ; approx 16 ticks per second
-TIMER_COUNT EQU 1 ; Count of timer fires until advancing gameplay
+TIMER_COUNT EQU 4 ; Count of timer fires until advancing gameplay
 
 Timer::
     push af
@@ -17,7 +17,6 @@ Timer::
     xor a
     ld [hTimerCounter], a
     call AdvanceSnake
-    call UpdateApplePosition
 
 .finish
     pop hl

@@ -1,13 +1,5 @@
 section "Apple Logic", rom0
 
-SetInitialAppleValues::
-    xor a
-    ld [wLastAppleLocation], a
-    ld [wLastAppleLocation + 1], a
-    ld [wAppleLocation], a
-    ld [wAppleLocation + 1], a
-    ret
-
 UpdateApplePosition::
     call RandomWord ; `bc` contains a random number
     ld a, c
@@ -37,11 +29,6 @@ UpdateApplePosition::
     ld b, a
     jr .normalizeRow ; keep subtracting until `bc` is in the range
 .finish
-    ; load `wLastAppleLocation` with `wAppleLocation`
-    ld a, [wAppleLocation]
-    ld [wLastAppleLocation], a
-    ld a, [wAppleLocation + 1]
-    ld [wLastAppleLocation + 1], a
     ; load `wAppleLocation` with updated location
     ld a, b
     ld [wAppleLocation], a

@@ -35,9 +35,9 @@ Start::
     call DisableLCD
     call CopySnakeTilesToVRAM
     call CopySnakeBGPaletteToVRAM
-    call ConfigureInitialSnakeValues
+    call ConfigureInitialSnakeValuesAndScore
     call SetInitialDirection
-    call SetInitialAppleValues
+    call UpdateApplePosition
     call ConfigureInterrupts
     call StartTimer
     call EnableLCD

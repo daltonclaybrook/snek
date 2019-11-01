@@ -20,6 +20,6 @@ wSegmentLocations::
 wAppleLocation::
     ds 2
 
-; Used to zero out the tile where the apple last was
-wLastAppleLocation::
+; The current score of the game
+wScore::
     ds 2

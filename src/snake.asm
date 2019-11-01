@@ -1,6 +1,6 @@
 section "Snake Gameplay Logic", rom0
 
-ConfigureInitialSnakeValues::
+ConfigureInitialSnakeValuesAndScore::
     xor a
     ld [wHeadOffset], a  ; reset snake head offset to zero
     ld a, 3 ; snake has initial length of 3
@@ -18,6 +18,9 @@ ConfigureInitialSnakeValues::
     ld [hl], 0
     inc hl
     ld [hli], a
+    xor a ; set score to zero
+    ld [wScore], a
+    ld [wScore + 1], a
     ret
 
 AdvanceSnake::
@@ -30,6 +33,7 @@ AdvanceSnake::
     call WrapBCIfNecessary
     ld a, [wHeadOffset]
     call LoadLocationBCIntoOffsetA
+    call CheckIfSnakeIsBitingApple
     ret
 
 ; Load the BG map location of the segment with offset `a` into `bc`
@@ -150,4 +154,38 @@ WrapBCIfNecessary::
 .finish
     ld b, h ; copy `hl` back into `bc`
     ld c, l
+    ret
+
+; Check if the current snake head position is the same as the apple position
+; @param `bc` - The snake head position
+CheckIfSnakeIsBitingApple::
+    ld a, [wAppleLocation]
+    cp b
+    jr nz, .finish
+    ld a, [wAppleLocation + 1]
+    cp c
+    jr nz, .finish
+    ; Apple location matches `bc`! move the apple and increment the score
+    call UpdateApplePosition
+    call IncrementGameScore
+    call IncrementSnakeLength
+.finish
+    ret
+
+; Increments the score by 1
+IncrementGameScore::
+    ld a, [wScore + 1]
+    inc a
+    ld [wScore + 1], a
+    ret nz
+    ; incrememnt high byte if the low byte rolled over and is now zero
+    ld a, [wScore]
+    inc a
+    ld [wScore], a
+    ret
+
+IncrementSnakeLength::
+    ld a, [wSnakeLength]
+    inc a
+    ld [wSnakeLength], a
     ret
